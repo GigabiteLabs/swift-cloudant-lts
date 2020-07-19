@@ -135,6 +135,7 @@ internal class URLSessionTask {
      - parameter delegate: The delegate for this task.
      */
     init(session: URLSession, request: URLRequest, inProgressTask:URLSessionDataTask, delegate: InterceptableSessionDelegate) {
+        //NSLog("session initialized with request: \(request), url string: \(request.url?.absoluteString), absolute: \(request.url?.absoluteURL.absoluteString)")
         self.request = request
         self.session = session
         self.delegate = delegate
@@ -215,11 +216,12 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
      - returns: A `URLSessionTask` representing the task for the `NSURLRequest`
      */
     internal func dataTask(request: URLRequest, delegate: InterceptableSessionDelegate) -> URLSessionTask {
-        
+        //NSLog("dataTask URL: \(request.url?.absoluteString)")
         // Only request another cookie **if** cookie auth is enabled **and** it is the first request
         // for this session, renewals will be handled as tasks complete.
         if let _ = sessionRequestBody, let url = request.url, self.isFirstRequest {
             self.isFirstRequest = false
+            //NSLog("requesting cookie with requestURL, absoluteString: \(url.absoluteString), path: \(url.path), baseURL: \(url.baseURL)")
             requestCookie(url: url)
         }
         
@@ -372,10 +374,25 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         guard shouldMakeCookieRequest else { return }
         
         let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.path = "/_session"
+        //NSLog("components for cookie request: \(components)")
         
+        let pathStringComponents = components.path?.components(separatedBy: "/")
+        //NSLog("pathStringComponents: \(pathStringComponents)")
+        var sessionPath = ""
+        if let componentCount = pathStringComponents?.count {
+            switch componentCount >= 3 {
+            case true:
+                sessionPath = "/\(pathStringComponents![1])/_session"
+            case false:
+                sessionPath = "/_session"
+            }
+        }
+        components.path = sessionPath
+        //NSLog("EDITED component path: \(components.path)")
         
+        //NSLog("requestURL: \(components.url?.absoluteURL)")
         var request = URLRequest(url: components.url!)
+        //NSLog("cookie request URL string: \(request.url?.absoluteString)")
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = sessionRequestBody

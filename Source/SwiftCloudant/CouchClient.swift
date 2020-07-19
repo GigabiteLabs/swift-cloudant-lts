@@ -99,7 +99,6 @@ public class CouchDBClient {
                                                                      password: password)
 
         self.session = InterceptableSession(delegate: nil, configuration: sessionConfiguration)
-
     }
 
     /**

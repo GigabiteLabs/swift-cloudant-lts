@@ -103,7 +103,7 @@ class OperationRequestExecutor: InterceptableSessionDelegate {
         do {
             let builder = OperationRequestBuilder(operation: self.operation)
             let request = try builder.makeRequest()
-
+            //NSLog("execute request url: \(request.url?.absoluteString)")
             self.task = self.operation.session.dataTask(request: request, delegate: self)
             self.task?.resume()
         } catch {

@@ -100,17 +100,27 @@ class OperationRequestBuilder {
      Builds the NSURLRequest from the operation in the property `operation`
      */
     func makeRequest() throws -> URLRequest {
-        
         guard let components = NSURLComponents(url: operation.rootURL, resolvingAgainstBaseURL: false)
         else {
             throw Error.URLGenerationFailed
         }
-        components.path = operation.httpPath
+        // leaving for now debugging pending full tests
+        //NSLog("URL components: \(components)")
+        //NSLog("Operation HTTP path: \(operation.httpPath)")
+        //NSLog("Combined: \(components.path)\(operation.httpPath)")
+        var path = ""
+        if let subPath = components.path {
+            path = "\(subPath)\(operation.httpPath)"
+        } else {
+            path = operation.httpPath
+        }
+        components.path = path
         var queryItems: [URLQueryItem] = []
 
         if let _ = components.queryItems {
             queryItems.append(contentsOf: components.queryItems!)
         }
+        //NSLog("queryItems: \(components.queryItems)")
 
         queryItems.append(contentsOf: operation.queryItems)
         components.queryItems = queryItems
@@ -121,6 +131,7 @@ class OperationRequestBuilder {
         }
 
         var request = URLRequest(url: url)
+        //NSLog("url configured as: \(url.absoluteString)")
         request.cachePolicy = .useProtocolCachePolicy
         request.timeoutInterval = 10.0
         request.httpMethod = operation.httpMethod

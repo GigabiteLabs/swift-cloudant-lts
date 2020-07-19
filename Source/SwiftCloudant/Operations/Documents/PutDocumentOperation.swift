@@ -49,7 +49,7 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
         self.body = body
         self.databaseName = databaseName
         self.completionHandler = completionHandler
-        
+    
     }
     
     public let completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)?
