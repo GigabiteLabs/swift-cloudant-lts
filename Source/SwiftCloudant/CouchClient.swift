@@ -16,7 +16,6 @@
 
 import Foundation
 import Dispatch
-
 /**
  Configures an instance of CouchDBClient.
  */
@@ -91,7 +90,7 @@ public class CouchDBClient {
         self.username = username
         self.password = password
         queue = OperationQueue()
-
+        
         let sessionConfiguration = InterceptableSessionConfiguration(shouldBackOff: configuration.shouldBackOff,
                                                                      backOffRetries: configuration.backOffAttempts,
                                                                      initialBackOff: configuration.initialBackOff,
