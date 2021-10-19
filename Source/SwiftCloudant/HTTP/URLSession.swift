@@ -89,11 +89,14 @@ internal struct InterceptableSessionConfiguration {
     
     internal var password: String?
     
+    internal var useSubfolderHostPath: Bool
+    
     init(maxRetries: UInt = 10, shouldBackOff:Bool,
          backOffRetries: UInt = 3,
          initialBackOff: DispatchTimeInterval = .milliseconds(250),
          username: String? = nil,
-         password: String? = nil ){
+         password: String? = nil,
+         useSubfolderHostPath: Bool = false){
         
         self.maxRetries = maxRetries
         self.shouldBackOff = shouldBackOff
@@ -101,6 +104,7 @@ internal struct InterceptableSessionConfiguration {
         self.initialBackOff = initialBackOff
         self.username = username
         self.password = password
+        self.useSubfolderHostPath = useSubfolderHostPath
     }
 }
 
@@ -185,9 +189,11 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
     
     private var shouldMakeCookieRequest: Bool = true
     
+    private var useSubfolderHostPath: Bool = false
+    
     convenience override init() {
-        self.init(delegate: nil, configuration: InterceptableSessionConfiguration(shouldBackOff: false))
-        
+        self.init(delegate: nil,
+                  configuration: InterceptableSessionConfiguration(shouldBackOff: false))
     }
 
     /**
@@ -197,6 +203,8 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
      */
     init(delegate: URLSessionDelegate?, configuration: InterceptableSessionConfiguration) {
         self.configuration = configuration
+        // set flag for instance hosted on subfolder path
+        self.useSubfolderHostPath = configuration.useSubfolderHostPath
         
         if let username = configuration.username, let password = configuration.password {
             let encodedUsername = username.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.alphanumerics)!
@@ -380,7 +388,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         //NSLog("pathStringComponents: \(pathStringComponents)")
         var sessionPath = ""
         if let componentCount = pathStringComponents?.count {
-            switch componentCount >= 3 {
+            switch componentCount >= 3 && useSubfolderHostPath {
             case true:
                 sessionPath = "/\(pathStringComponents![1])/_session"
             case false:
@@ -388,7 +396,6 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
             }
         }
         components.path = sessionPath
-        //NSLog("EDITED component path: \(components.path)")
         
         //NSLog("requestURL: \(components.url?.absoluteURL)")
         var request = URLRequest(url: components.url!)

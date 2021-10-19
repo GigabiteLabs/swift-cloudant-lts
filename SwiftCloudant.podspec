@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftCloudant"
-  s.version      = "0.9.3"
+  s.version      = "0.9.4"
   s.summary      = "SwiftCloudant is a client library for  Apache CouchDB / IBM Cloudant"
 
   s.description  = <<-DESC
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.10"
 
-  s.source = { :git => "https://github.com/GigabiteLabs/swift-cloudant.git", :tag => s.version.to_s}
+  s.source = { :git => "https://github.comg/GigabiteLabs/swift-cloudant.git", :tag => s.version.to_s}
   s.source_files  = "Classes", "Source/**/*.swift"
   s.swift_version = '4.2'
 end

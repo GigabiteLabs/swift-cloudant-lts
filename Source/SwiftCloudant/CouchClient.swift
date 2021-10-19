@@ -40,6 +40,15 @@ public struct ClientConfiguration {
      the initial back off value and the number of attempts to back off and successfully retreive a response from the server.
      */
     public var initialBackOff:DispatchTimeInterval
+    
+    /**
+     An explicit flag to set, indicating if URL paths should be
+     treated for targeting a CouchDB instance hosted on a
+     subfolder, rather than root-level, or a subdomain.
+     
+     - Note: Default value is `false`
+     */
+    public var useSubfolderHostPath: Bool
 
     /**
      Creates an ClientConfiguration
@@ -50,12 +59,15 @@ public struct ClientConfiguration {
      this value will be doubled for each subsequent back off
 
      */
-    public init(shouldBackOff: Bool, backOffAttempts: UInt = 3, initialBackOff: DispatchTimeInterval =  .milliseconds(250)){
+    public init(shouldBackOff: Bool,
+                backOffAttempts: UInt = 3,
+                initialBackOff: DispatchTimeInterval = .milliseconds(250),
+                useSubfolderHostPath: Bool = false){
         self.shouldBackOff = shouldBackOff
         self.backOffAttempts = backOffAttempts
         self.initialBackOff = initialBackOff
+        self.useSubfolderHostPath = useSubfolderHostPath
     }
-
 }
 
 
@@ -70,9 +82,15 @@ public class CouchDBClient {
     internal let username: String?
     internal let password: String?
     internal let rootURL: URL
-
+    
     // The version number of swift-cloudant, as a string
     static let version = "0.9.1-SNAPSHOT"
+    
+    /**
+     An accessor to retrieve the default configuration used
+     when no explicit configuration is provided.
+     */
+    public static let defaultConfig = ClientConfiguration(shouldBackOff: false)
 
     /**
      Creates a CouchDBClient instance.
@@ -85,7 +103,7 @@ public class CouchDBClient {
     public init(url: URL,
                 username: String?,
                 password: String?,
-                configuration: ClientConfiguration = ClientConfiguration(shouldBackOff: false)) {
+                configuration: ClientConfiguration = CouchDBClient.defaultConfig) {
         self.rootURL = url
         self.username = username
         self.password = password
@@ -95,7 +113,8 @@ public class CouchDBClient {
                                                                      backOffRetries: configuration.backOffAttempts,
                                                                      initialBackOff: configuration.initialBackOff,
                                                                      username: username,
-                                                                     password: password)
+                                                                     password: password,
+                                                                     useSubfolderHostPath: configuration.useSubfolderHostPath)
 
         self.session = InterceptableSession(delegate: nil, configuration: sessionConfiguration)
     }
