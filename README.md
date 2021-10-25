@@ -1,13 +1,3 @@
-# DEPRECATED
-
-**This library is now deprecated and will be end-of-life on Dec 31 2021.**
-
-The library remains supported until the end-of-life date,
-but will receive only _critical_ maintenance updates.
-
-For FAQs and additional information please refer to the
-[Cloudant blog](https://blog.cloudant.com/2021/06/30/Cloudant-SDK-Transition.html).
-
 # swift-cloudant
 [![Version](http://cocoapod-badges.herokuapp.com/v/SwiftCloudant/badge.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/CDTDatastore/SwiftCloudant.png)](http://cocoadocs.org/docsets/SwiftCloudant)
@@ -23,9 +13,9 @@ is built by [Cloudant](https://cloudant.com) and is available under the
 [ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
 [acdb]: http://couchdb.apache.org/
 
-## Early-Release
+## Stable Release
 
-This is an early-release version of the library, with support for the following operations:
+This is an stable release version of the library, with support for the following operations:
 
 - Getting documents by doc ID.
 - Updating and deleting documents.
@@ -34,8 +24,6 @@ This is an early-release version of the library, with support for the following 
 - Creating, updating and deleting of attachments.
 - Querying views.
 - Creating, deleting and querying indexes.
-
-We will be rounding out the feature set in upcoming releases.
 
 **Currently it does not support being called from Objective-C.**
 
@@ -53,12 +41,11 @@ Swift versions
 - Minimum Swift tools version 5.0
 
 Platforms
+- iOS
 - macOS
 - Linux
 
 Swift Cloudant is unsupported on:
-
-- iOS (should work, but hasn't been tested)
 - tvOS
 - watchOS
 
