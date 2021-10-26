@@ -31,12 +31,11 @@ This is an stable release version of the library, with support for the following
 
 ## Support
 
-`SwiftCloudant` is supported, however since it is an early release it is
-on a "best effort" basis. 
+`SwiftCloudant-LTS` is supported, long-term.
 
 ### Platforms
 
-Currently Swift Cloudant supports:
+Currently SwiftCloudant-LTS supports:
 
 Swift versions
 - Minimum Swift language version 4.2
@@ -58,17 +57,17 @@ SwiftCloudant is available using the Swift Package Manager and [CocoaPods](http:
 To use with CocoaPods add the following line to your Podfile:
 
 ```ruby
-pod 'SwiftCloudant', :git => 'https://github.com/GigabiteLabs/swift-cloudant.git'
+pod 'SwiftCloudant-LTS', :git => 'https://github.com/GigabiteLabs/swift-cloudant-lts.git'
 ```
 
 To use with the swift package manager add the following line to your dependencies
 in your Package.swift:
 ```swift
-.Package(url: "https://github.com/GigabiteLabs/swift-cloudant.git")
+.Package(url: "https://github.com/GigabiteLabs/swift-cloudant-lts.git")
 ```
 ## <a name="overview"></a>Overview of the library
 ```swift
-import SwiftCloudant
+import SwiftCloudant-LTS
 
 // Create a CouchDBClient
 let cloudantURL = URL(string:"https://username.cloudant.com")!
