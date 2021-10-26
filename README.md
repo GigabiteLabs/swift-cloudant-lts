@@ -32,7 +32,7 @@ This is an stable release version of the library, with support for the following
 ## Support
 
 `SwiftCloudant` is supported, however since it is an early release it is
-on a "best effort" basis.
+on a "best effort" basis. 
 
 ### Platforms
 
