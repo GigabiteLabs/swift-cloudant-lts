@@ -15,18 +15,18 @@
 import PackageDescription
 
 let package = Package(
-  name: "SwiftCloudant",
+  name: "SwiftCloudant-LTS",
   products: [
       .library(
-        name: "SwiftCloudant", 
-        targets: ["SwiftCloudant"]),
+        name: "SwiftCloudant-LTS",
+        targets: ["SwiftCloudant-LTS"]),
   ],
   targets: [
       .target(
-          name: "SwiftCloudant"),
+          name: "SwiftCloudant-LTS"),
       .testTarget(
           name: "SwiftCloudantTests",
-          dependencies: ["SwiftCloudant"])
+          dependencies: ["SwiftCloudant-LTS"])
   ],
   swiftLanguageVersions: [.v4_2, .v5]
 )

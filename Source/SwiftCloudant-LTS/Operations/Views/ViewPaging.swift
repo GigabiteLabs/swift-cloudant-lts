@@ -499,51 +499,51 @@ public class ViewPager {
                                         conflicts: conflicts,
                                         reduce: false,
                                         stale: stale,
-                                        includeLastUpdateSequenceNumber: includeLastUpdateSequenceNumber)
-        { (response, httpInfo, error) in
-                if let response = response, let rows = response["rows"] as? [[String: Any]] {
-                    
-                    let filteredRows: [[String: Any]]
-                    
-                    if let last = rows.last {
-                        self.state.lastEndKey = last["key"]
-                        self.state.lastEndKeyDocID = last["id"] as? String
-                    }
-                    
-                    if let first = rows.first {
-                        self.state.lastStartKey = first["key"]
-                        self.state.lastStartKeyDocID = first["id"] as? String
-                    }
-                    
-                    // we should only filter last if we are going forward, if backwards we need to filter the first.
-                    if rows.count > Int(self.pageSize) {
-                        if page == .next || page == nil {
-                            filteredRows = Array(rows.dropLast())
-                        } else {
-                            filteredRows = Array(rows.dropFirst()).reversed()
-                        }
-                    } else {
-                        filteredRows = rows
-                    }
-                    
-                    // call the row handler.
-                    for row in filteredRows {
-                        self.rowHandler?(row)
-                    }
-                    
-                    var requestedResponse = response
-                    requestedResponse["rows"] = filteredRows
-                    
-                    if let returned = self.pageHandler(requestedResponse, self.makeToken(), error) {
-                        self.makeRequest(page: returned)
-                    }
-                    
-                } else {
-                    if let _ =  self.pageHandler(nil, self.makeToken(), error) {
-                        print("Next and previous states not allowed")
-                    }
+                                        includeLastUpdateSequenceNumber: includeLastUpdateSequenceNumber, completionHandler:
+                                            { (response, httpInfo, error) in
+            if let response = response, let rows = response["rows"] as? [[String: Any]] {
+                
+                let filteredRows: [[String: Any]]
+                
+                if let last = rows.last {
+                    self.state.lastEndKey = last["key"]
+                    self.state.lastEndKeyDocID = last["id"] as? String
                 }
-        }
+                
+                if let first = rows.first {
+                    self.state.lastStartKey = first["key"]
+                    self.state.lastStartKeyDocID = first["id"] as? String
+                }
+                
+                // we should only filter last if we are going forward, if backwards we need to filter the first.
+                if rows.count > Int(self.pageSize) {
+                    if page == .next || page == nil {
+                        filteredRows = Array(rows.dropLast())
+                    } else {
+                        filteredRows = Array(rows.dropFirst()).reversed()
+                    }
+                } else {
+                    filteredRows = rows
+                }
+                
+                // call the row handler.
+                for row in filteredRows {
+                    self.rowHandler?(row)
+                }
+                
+                var requestedResponse = response
+                requestedResponse["rows"] = filteredRows
+                
+                if let returned = self.pageHandler(requestedResponse, self.makeToken(), error) {
+                    self.makeRequest(page: returned)
+                }
+                
+            } else {
+                if let _ =  self.pageHandler(nil, self.makeToken(), error) {
+                    print("Next and previous states not allowed")
+                }
+            }
+        })
         
         client.add(operation: viewOp)
         

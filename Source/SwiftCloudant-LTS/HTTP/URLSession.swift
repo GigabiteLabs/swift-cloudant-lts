@@ -139,7 +139,7 @@ internal class URLSessionTask {
      - parameter delegate: The delegate for this task.
      */
     init(session: URLSession, request: URLRequest, inProgressTask:URLSessionDataTask, delegate: InterceptableSessionDelegate) {
-        //NSLog("session initialized with request: \(request), url string: \(request.url?.absoluteString), absolute: \(request.url?.absoluteURL.absoluteString)")
+        
         self.request = request
         self.session = session
         self.delegate = delegate
@@ -229,7 +229,6 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         // for this session, renewals will be handled as tasks complete.
         if let _ = sessionRequestBody, let url = request.url, self.isFirstRequest {
             self.isFirstRequest = false
-            //NSLog("requesting cookie with requestURL, absoluteString: \(url.absoluteString), path: \(url.path), baseURL: \(url.baseURL)")
             requestCookie(url: url)
         }
         
@@ -385,7 +384,6 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         //NSLog("components for cookie request: \(components)")
         
         let pathStringComponents = components.path?.components(separatedBy: "/")
-        //NSLog("pathStringComponents: \(pathStringComponents)")
         var sessionPath = ""
         if let componentCount = pathStringComponents?.count {
             switch componentCount >= 3 && useSubfolderHostPath {
@@ -397,9 +395,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         }
         components.path = sessionPath
         
-        //NSLog("requestURL: \(components.url?.absoluteURL)")
         var request = URLRequest(url: components.url!)
-        //NSLog("cookie request URL string: \(request.url?.absoluteString)")
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = sessionRequestBody
@@ -473,16 +469,18 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         let osVersion = processInfo.operatingSystemVersionString
 
         #if os(iOS)
-            let platform = "iOS"
+            let platform = "ios"
         #elseif os(OSX)
-            let platform = "OSX"
+            let platform = "osx"
         #elseif os(Linux)
-            let platform = "Linux" // Cribbed from Kitura, neeed to see who is running this on Linux
+            let platform = "linus" // Cribbed from Kitura, neeed to see who is running this on Linux
+        #elseif targetEnvironment(simulator)
+            let platform = "simulator";
         #else
-            let platform = "Unknown";
+            let platform = "unknown";
         #endif
 
-        return "SwiftCloudant/\(CouchDBClient.version)/\(platform)/\(osVersion))"
+        return "SwiftCloudant-LTS:\(CouchDBClient.version):\(platform):\(osVersion))"
 
     }
 }
@@ -500,6 +498,8 @@ fileprivate extension DispatchTimeInterval {
             return .seconds(value * multiple)
         case .never:
             return .never
+        @unknown default:
+            fatalError("unknown value used for URLSession time interval.")
         }
     }
 }

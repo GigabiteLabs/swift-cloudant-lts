@@ -104,10 +104,7 @@ class OperationRequestBuilder {
         else {
             throw Error.URLGenerationFailed
         }
-        // leaving for now debugging pending full tests
-        //NSLog("URL components: \(components)")
-        //NSLog("Operation HTTP path: \(operation.httpPath)")
-        //NSLog("Combined: \(components.path)\(operation.httpPath)")
+
         var path = ""
         if let subPath = components.path {
             path = "\(subPath)\(operation.httpPath)"

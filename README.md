@@ -1,14 +1,16 @@
-# swift-cloudant
+# swift-cloudant-lts
 [![Version](http://cocoapod-badges.herokuapp.com/v/SwiftCloudant/badge.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/CDTDatastore/SwiftCloudant.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Build Status](https://travis-ci.org/cloudant/swift-cloudant.svg?branch=master)](https://travis-ci.org/cloudant/swift-cloudant)
 
-**Applications use swift-cloudant to store, index and query remote
+**Applications use swift-cloudant-lts to store, index and query remote
 JSON data on Cloudant or CouchDB.**
 
-Swift-Cloudant is an [Apache CouchDB&trade;][acdb] client written in Swift. It
+Swift-Cloudant-LTS is an [Apache CouchDB&trade;][acdb] client written in Swift. It
 is built by [Cloudant](https://cloudant.com) and is available under the
 [Apache 2.0 license][ap2].
+
+Originally authored by IBMers, forked and now maintained for long-term support by [GigabiteLabs](https://github.com/gigabitelabs)
 
 [ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
 [acdb]: http://couchdb.apache.org/
