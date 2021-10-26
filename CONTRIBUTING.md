@@ -1,5 +1,7 @@
 # Contributing
 
+<b>OUT OF DATE:</b> we have a TODO to update this (as of Oct 2021). Some or all of the information here may not work or be applicable.
+
 ## Issues
 
 Please [read these guidelines](http://ibm.biz/cdt-issue-guide) before opening an issue.

@@ -15,9 +15,9 @@ Originally authored by IBMers, forked and now maintained for long-term support b
 [ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
 [acdb]: http://couchdb.apache.org/
 
-## Early-Release
+## Stable Release
 
-This is an early-release version of the library, with support for the following operations:
+This is an stable release version of the library, with support for the following operations:
 
 - Getting documents by doc ID.
 - Updating and deleting documents.
@@ -26,8 +26,6 @@ This is an early-release version of the library, with support for the following 
 - Creating, updating and deleting of attachments.
 - Querying views.
 - Creating, deleting and querying indexes.
-
-We will be rounding out the feature set in upcoming releases.
 
 **Currently it does not support being called from Objective-C.**
 
@@ -45,12 +43,11 @@ Swift versions
 - Minimum Swift tools version 5.0
 
 Platforms
+- iOS
 - macOS
 - Linux
 
 Swift Cloudant is unsupported on:
-
-- iOS (should work, but hasn't been tested)
 - tvOS
 - watchOS
 
@@ -61,13 +58,13 @@ SwiftCloudant is available using the Swift Package Manager and [CocoaPods](http:
 To use with CocoaPods add the following line to your Podfile:
 
 ```ruby
-pod 'SwiftCloudant', :git => 'https://github.com/cloudant/swift-cloudant.git'
+pod 'SwiftCloudant', :git => 'https://github.com/GigabiteLabs/swift-cloudant.git'
 ```
 
 To use with the swift package manager add the following line to your dependencies
 in your Package.swift:
 ```swift
-.Package(url: "https://github.com/cloudant/swift-cloudant.git")
+.Package(url: "https://github.com/GigabiteLabs/swift-cloudant.git")
 ```
 ## <a name="overview"></a>Overview of the library
 ```swift
