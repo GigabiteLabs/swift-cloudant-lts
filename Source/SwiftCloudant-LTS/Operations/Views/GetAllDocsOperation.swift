@@ -178,7 +178,9 @@ public class GetAllDocsOperation : CouchOperation, ViewOperation, JSONOperation 
     
     public func serialise() throws {
         if let keys = keys {
-            jsonData = try JSONSerialization.data(withJSONObject: keys)
+            let jsonCompatible = [ "keys" : keys ]
+            jsonData = try JSONSerialization.data(withJSONObject: jsonCompatible)
+            print()
         }
         
         if let key = key {
