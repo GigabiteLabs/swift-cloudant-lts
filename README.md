@@ -1,3 +1,9 @@
+# [ DEPRECATION NOTICE ]
+
+We are no longer maintaining this package here, instead, please see the official IBM repository where we are going to maintain this into the future.
+
+[https://github.com/ibm/swift-cloudant]()
+
 # swift-cloudant-lts
 [![Version](http://cocoapod-badges.herokuapp.com/v/SwiftCloudant/badge.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/CDTDatastore/SwiftCloudant.png)](http://cocoadocs.org/docsets/SwiftCloudant)
